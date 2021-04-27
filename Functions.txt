@@ -1,0 +1,29 @@
+USEFUL LINK  :  https://docs.python.org/3/tutorial/datastructures.html
+
+
+Python List is implemented using Linked List in c++ language.
+
+Memeber Functions we are implementing :
+
+Implement Negative Indexing;
+Overload [], : to get sublists from the list
+eg - L = [2,3,4,5,6,7,8,9]
+     print(L[3:5])
+
+
+
+1.  L.append() : Adds an element at the end of the list
+2.  len(L)     : Tells the length of List
+3.  L.count(5)   : Returns the number of occurance of 5 in some integer  list
+4.  L.insert(position,value) : Will insert 'value' at the specified 'position'
+5.  L.pop(position)     : Returns the element at specified position,
+                          default position is -1, which returns the last item
+6.  L.remove(value) : Removes the 1st occurance of 'value' in the list
+7.  L.index(value,start,end) : Finds the index of 'value' starting from the 'start index'
+                            If start is not passed, by default its value is 0
+                            Means it starts finding from 0 index
+                            If end is not passed,by default its value is len(L)
+                            Please check does it find on start or end inclusive or not.
+
+Future Scope : Make every command similar to python,
+                eg- Implement print() instead of cout or printf()
