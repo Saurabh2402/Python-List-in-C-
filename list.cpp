@@ -1,6 +1,30 @@
 #include<iostream>
 using namespace std;
 
+template<class T>
+class ReturnObject
+{
+    T data;
+    int error;
+
+    public:
+    ReturnObject()
+    { error=0; }
+
+    void setError(int e)
+    { error=e; }
+
+    void setData(T d)
+    { data=d; }
+
+    T Data()
+    { return data; }
+
+    int Error()
+    { return error; }
+
+};
+
 template <class T>
 class Node
 {
@@ -9,35 +33,30 @@ class Node
 
     public:
     Node()
-    {
-        next=NULL;
-    }
+    { next=NULL; }
+
     void setData(T val)
-    {
-        data=val;
-    }
+    { data=val; }
+
     void setNext(Node<T>* point)
-    {
-        next=point;
-    }
+    { next=point; }
+
     T Data()
-    {
-        return data;
-    }
+    { return data; }
+
     Node<T>* Next()
-    {
-        return next;
-    }
+    { return next; }
+
 };
 
 template <class T>
-class list
+class List
 {
     Node<T>* head;
     int size;
     
     public:
-    list()
+    List()
     {
         head=NULL;
         size=0;
@@ -67,10 +86,15 @@ class list
         return size;
     }
     
-    T pop(int pos=-1)
+    ReturnObject<T> pop(int pos=-1)
     {
+        ReturnObject<T> obj;
+        obj.setError(0);
         if(head==NULL)
-            return -1;
+        {
+           obj.setError(1);
+           return obj;
+        }
         if(pos==-1)
         {
             Node<T>* temp1,*temp2;
@@ -82,26 +106,44 @@ class list
                 temp1=temp1->Next();
             }
             temp2->setNext(NULL);
-            T val=temp1->Data();
+            obj.setData(temp1->Data());
             delete temp1;
             size--;
-            return val;
+
+            return obj;
         }
         if(pos==0)
         {
-            T val=head->Data();
+            obj.setData(head->Data());
             Node<T>* temp;
             temp=head;
             head=head->Next();
             delete temp;
             size--;
-            return val;
+            return obj;
+        }
+        
+        if(pos>=size)
+        {
+            obj.setError(1);
+            return obj;
         }
 
         else
         {
-            cout<<"backup";
-            return -1;
+            int count=0;
+            Node<T>* temp=head, *temp1;
+            while(count<pos)
+            {
+                temp1=temp;
+                temp=temp->Next();
+                count++;
+            }
+            obj.setData(temp->Data());
+            temp1->setNext(temp->Next());
+            delete temp;
+            size--;
+            return obj;
         }
     }
 
