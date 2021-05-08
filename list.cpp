@@ -93,9 +93,8 @@ class List
         if(head==NULL)
         {
            obj.setError(1);
-           return obj;
         }
-        if(pos==-1)
+        else if(pos==-1)
         {
             Node<T>* temp1,*temp2;
             temp1=head;
@@ -109,10 +108,8 @@ class List
             obj.setData(temp1->Data());
             delete temp1;
             size--;
-
-            return obj;
         }
-        if(pos==0)
+        else if(pos==0)
         {
             obj.setData(head->Data());
             Node<T>* temp;
@@ -120,19 +117,15 @@ class List
             head=head->Next();
             delete temp;
             size--;
-            return obj;
         }
         
-        if(pos>=size)
-        {
+        else if(pos>=size)
             obj.setError(1);
-            return obj;
-        }
 
         else
         {
             int count=0;
-            Node<T>* temp=head, *temp1;
+            Node<T> *temp=head, *temp1=head;
             while(count<pos)
             {
                 temp1=temp;
@@ -143,8 +136,8 @@ class List
             temp1->setNext(temp->Next());
             delete temp;
             size--;
-            return obj;
         }
+        return obj;
     }
 
     void display()

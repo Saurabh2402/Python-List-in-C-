@@ -15,15 +15,16 @@ int main()
     l.append(7);
     l.append(8);
     l.display();
-    l.pop();
+    // l.pop();
+    // l.display();
+    l.pop(0);
     l.display();
-    l.pop(1);
-    l.pop(4);
-    l.display();
-    cout<<l.pop(10).Error()<<endl;
-    cout<<l.len()<<endl;;
-    cout<<l.pop(1).Data()<<endl;
-    l.display();
+    // l.pop(7);
+    // l.display();
+    // cout<<l.pop(10).Error()<<endl;
+    // cout<<l.len()<<endl;;
+    // cout<<l.pop(1).Data()<<endl;
+    // l.display();
 
     return 0;
 }
