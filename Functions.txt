@@ -24,17 +24,12 @@ eg - L = [2,3,4,5,6,7,8,9]
                             Means it starts finding from 0 index
                             If end is not passed,by default its value is len(L)
                             Please check does it find on start or end inclusive or not.
-                              -> Start is included in finding but end is not included
+                            -> Start is included in finding but end is not included
 
 8. L.extend(List2) : Adds List2 at the end of L
 9. L.operator+(List2) : Same as extend   L= L1+L2
-10. L.remove(element) : Removes the element passed
 Future Scope : Make every command similar to python,
-                eg- Implement print() instead of cout or printf()
-
-
-
-
+              eg- Implement print() instead of cout or printf()
 
 clear() : Empties the list
 copy()  : returns shallow copy

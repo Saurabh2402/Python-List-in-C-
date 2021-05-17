@@ -1,8 +1,8 @@
 #include<iostream>
 using namespace std;
 
-template<class T>
-class ReturnObject
+template <class T>
+class ReturnObject //Class to simplify error reporting with a few functions
 {
     T data;
     int error;
@@ -54,12 +54,46 @@ class List
 {
     Node<T>* head;
     int size;
+
+    List<T> copy(Node<T>* node2, List<T> l)
+    {
+        Node<T>* from=node2;
+        while(from!=NULL)
+        {
+            l.append(from->Data());
+            from=from->Next();
+        }
+        return l;
+    }
     
     public:
     List()
     {
         head=NULL;
         size=0;
+    }
+    
+    Node<T>* getHead()
+    {
+        return head;
+    }
+
+    int len()
+    {
+        return size;
+    }
+
+    void setHead(Node<T>* node)
+    {
+        head=node;
+    }
+
+    int convertNegativeIndexToPositive(int index)
+    {   //If index is negative, it will return corresponding positive index
+        //else it will return the positive index itself
+        if(index<0)
+            return size+index;
+        return index;
     }
 
     void append(T data)
@@ -80,51 +114,40 @@ class List
         }
         size++;
     }
-
-    int len()
-    {
-        return size;
-    }
     
-    void insert(int pos, T value)//remember to do size++
+    void insert(int pos, T value)//
     {
-       // if(pos>size || pos<-size-2) // Checking if pos is valid 
-       //     cout<<"Cannot insert, as pos is excedding range of size"<<endl;
-       // else
+        // if(pos>size || pos<-size-2)
+        // Checking if pos is valid 
+        // cout<<"Cannot insert, as pos is excedding range of size"<<endl;
+        // else
+
+        if(pos==0 || pos<=-size) //Insert at beginning
         {
-            
-            if(pos==0 || pos<=-size)//Insert at beginning
-            {
-                Node<T>* newNode = new Node<T>();
-                newNode->setData(value);
-                newNode->setNext(head);
-                head = newNode;
-            }
-            else if(pos>=size)   //Insert at end
-                append(value);
-
-            else    // Insert at any middle position
-            {
-                pos = convertNegativeIndexToPositive(pos);
-                int count=0;
-                Node<T>* temp = head;
-
-                while(count<pos-1)
-                {
-                    temp = temp->Next();
-                    count++;
-                }
-                Node<T>* newNode = new Node<T>();
-                newNode->setData(value);
-                newNode->setNext(temp->Next());
-                temp->setNext(newNode);
-                    
-            }
-                
-            size++;
+            Node<T>* newNode = new Node<T>();
+            newNode->setData(value);
+            newNode->setNext(head);
+            head = newNode;
         }
-        
+        else if(pos>=size) //Insert at end
+            append(value);
+        else // Insert at any middle position
+        {
+            pos = convertNegativeIndexToPositive(pos);
+            int count=0;
+            Node<T>* temp = head;
 
+            while(count<pos-1)
+            {
+                temp = temp->Next();
+                count++;
+            }
+            Node<T>* newNode = new Node<T>();
+            newNode->setData(value);
+            newNode->setNext(temp->Next());
+            temp->setNext(newNode);        
+        }
+        size++;
     }
 
     int index(T val, int start=0, int end=-1)
@@ -132,22 +155,26 @@ class List
         //Will return -1 if element is not found
         //Will return -2 if Start index is greater than size
         //Will return -3 if End index is smaller than start
-        //Will return -1 if element is not found
+
         start = convertNegativeIndexToPositive(start);
         if(end==-1)
             end = size;
         end = convertNegativeIndexToPositive(end);
 
         if(head==NULL)
-            {cout<<"List is Empty"<<endl;return -1;}
+        {
+            return -1;
+        }
         if(start>=size)
-            {cout<< "Start index is greater than size!"<<endl;return -2;}
-        else if( end<start)
-            {cout<< "End index is smaller than start!"<<endl;return -3;}
-
+        {
+            return -2;
+        }
+        else if(end<start)
+        {
+            return -3;
+        }
         else
         {
-            cout<<"\nStarted search from "<< start << " to "<<end<<endl;
             int count=0;
             Node<T>* temp = head;
 
@@ -169,8 +196,7 @@ class List
         }
     }
 
-
-    ReturnObject<T> pop(int pos=-1)//remember to do size--
+    ReturnObject<T> pop(int pos=-1)//To remove an element from the List
     {
         // setError(0) : if there is no error
         // setError(1) : if list is empty
@@ -178,20 +204,17 @@ class List
 
         ReturnObject<T> obj;
         obj.setError(0);
-
         if(pos>=size || pos<-size)
-            obj.setError(2);
-            
+            obj.setError(2);    
         else
         {
-            pos = convertNegativeIndexToPositive(pos);
+            pos=convertNegativeIndexToPositive(pos);
         
             if(head==NULL)
                 obj.setError(1);
-            
-            else if(pos==-1 || pos==size-1) //As we have converted the negative index to psitive, just check pos==size-1
+            else if(pos==-1 || pos==size-1) //As we have converted the negative index to positive, just check pos==size-1
             {
-                Node<T>* temp1,*temp2;
+                Node<T> *temp1,*temp2;
                 temp1=head;
 
                 while(temp1->Next()!=NULL)
@@ -204,7 +227,6 @@ class List
                 delete temp1;
                 size--;
             }
-            
             else if(pos==0)
             {
                 obj.setData(head->Data());
@@ -214,8 +236,6 @@ class List
                 delete temp;
                 size--;
             }
-        
-        
             else
             {
                 int count=0;
@@ -231,10 +251,34 @@ class List
                 delete temp;
                 size--;
             }
-        
-        
         }
-    
+        return obj;
+    }
+
+    ReturnObject<T> remove(T value) //Removes a particular value from the list
+    {
+        ReturnObject<T> obj;
+        if(head->Data()==value)
+        {
+            pop(0);
+            obj.setError(0);
+            return obj;
+        }
+        Node<T> *temp, *prev;
+        temp=head;
+        while(temp->Data()!=value && temp!=NULL)
+        {
+            prev=temp;
+            temp=temp->Next();
+        }
+        if(temp==NULL)
+            obj.setError(1);
+        else
+        {   
+            obj.setError(0);
+            prev->setNext(temp->Next());
+            delete temp;          
+        }
         return obj;
     }
 
@@ -255,29 +299,36 @@ class List
         }
         cout<<endl;
     }
-    
-    int convertNegativeIndexToPositive(int index)
-    {   //If index is negative, it will return corresponding positive index
-        //else will return the positive index itself
-        if(index<0)
-            return size+index;
-        return index;
 
+    void clear() //clears the list
+    {
+        Node<T> *temp=head, *prev=NULL;
+        while(temp!=NULL)
+        {   
+            delete prev;
+            prev=temp;
+            temp=temp->Next();
+        }
+        
+        delete prev;
+        head=NULL;
     }
     
-    ReturnObject<T> operator[](int index)
+    ReturnObject<T> operator[](int index)//To get the value at a particular index
     {
-        //error is 1 if index exceeds size
-        //error is 2 if list is empty
         //error is 0 if there is no error
+        //error is 1 if list is empty
+        //error is 2 if index exceeds size
+        
         index = convertNegativeIndexToPositive(index);
         ReturnObject<T> obj;
-        if(index>size)
+
+        if(head==NULL)
         {
             obj.setError(1);
             return obj;
         }
-        if(head==NULL)
+        if(index>size)
         {
             obj.setError(2);
             return obj;
@@ -318,15 +369,15 @@ class List
                     break;
                 temp = temp->Next();
             }
-                
-
             counter+=step;
         }
-        
         return newlist;
-
     }
 
-
-    
+    List<T> operator+(List<T> list2)
+    {
+        List<T> list3;
+        return copy(list2.getHead(), copy(this->getHead(), list3));
+    }
+    //l3=l1+l2
 };
