@@ -309,9 +309,21 @@ class List
             prev=temp;
             temp=temp->Next();
         }
-        
         delete prev;
         head=NULL;
+    }
+
+    int count(T val)
+    {
+        int occur=0;
+        Node<T> *temp=head;
+        while(temp!=NULL)
+        {
+            if(temp->Data()==val)
+                occur++;
+            temp=temp->Next();
+        }
+        return occur;
     }
     
     ReturnObject<T> operator[](int index)//To get the value at a particular index
