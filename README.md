@@ -4,10 +4,10 @@ We have implemeted Python's List Data Structure in C++ Language.
 This projects aims at implementing some member functions of List for any datatype (say int, char or any user defined datatype).
 
 
-We were successful in implementing following functions - 
+## Functions implemented are :
 
   ( x is a variable & can be of any datatype (c++ template is used for its implementation) )
-  
+  ```
   1) append(x)            :  x will be appended to the list. 
   
   2) insert(int pos, x)   :  x will be inserted at the respective position.
@@ -35,3 +35,4 @@ Overloaded Operators - (), [], +
   9) member access operator [] - [int pos] : returns element at specified position.
  
  10) concatenation operator  + - (x1,x2) : returns a new list with x1 and x2 concatenated.
+ ```
