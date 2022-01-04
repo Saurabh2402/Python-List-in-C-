@@ -22,12 +22,16 @@ We were successful in implementing following functions -
   4) pop(int pos)         : Pops element at specified index.
   
   5) remove(x)            : Removes first occurance of element x.
+
+  6) count(x)             : Returns the count of x in the list.
+  
+  7) clear()              : Deletes the list.  
   
   
 Overloaded Operators - (), [], +
 
- 6) slicing operator       () - (int start, int end, int step) : returns a new list from specified range(start,end) and specified step.
+  8) slicing operator       () - (int start, int end, int step) : returns a new list from specified range(start,end) and specified step.
  
- 8) member access operator [] - [int pos] : returns element at specified position.
+  9) member access operator [] - [int pos] : returns element at specified position.
  
  10) concatenation operator  + - (x1,x2) : returns a new list with x1 and x2 concatenated.
